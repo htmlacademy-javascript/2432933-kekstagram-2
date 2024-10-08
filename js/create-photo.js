@@ -1,19 +1,22 @@
-import { MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar } from './const';
-import { getRandomElement, getRandomNumber } from './utils';
+import { MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar } from './const.js';
+import { getRandomElement, getRandomNumber } from './utils.js';
 
-let commentId = 1;
+/* let commentId = 1; */
 
 const createCommentsPhoto = () =>{
+
+  let commentId = 1;
   const RANDOM_NUMBER = getRandomNumber(Avatar.MIN_NUMBER, Avatar.MAX_NUMBER);
-  return {
+  return () => ({
     id : commentId++,
     avatar : `img/avatar-${RANDOM_NUMBER}.svg`,
     message : getRandomElement(MESSAGE),
     name : getRandomElement(NAMES),
-  };
+  });
 };
 
-const createCommentsArray = (randomArrayLength) => Array.from({ length: randomArrayLength }, createCommentsPhoto);
+const createObject = createCommentsPhoto();
+const createCommentsArray = (randomArrayLength) => Array.from({ length: randomArrayLength }, createObject);
 
 const createPhotoObject = (id) => {
   const commentsArray = getRandomNumber(PhotoConfig.MIN_COMMENTS,PhotoConfig.MAX_COMMENTS);
