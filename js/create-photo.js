@@ -1,15 +1,12 @@
 import { MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar } from './const.js';
 import { getRandomElement, getRandomNumber } from './utils.js';
 
-/* let commentId = 1; */
 
 const createCommentsPhoto = () =>{
-
   let commentId = 1;
-  const RANDOM_NUMBER = getRandomNumber(Avatar.MIN_NUMBER, Avatar.MAX_NUMBER);
   return () => ({
     id : commentId++,
-    avatar : `img/avatar-${RANDOM_NUMBER}.svg`,
+    avatar : `img/avatar-${getRandomNumber(Avatar.MIN_NUMBER, Avatar.MAX_NUMBER)}.svg`,
     message : getRandomElement(MESSAGE),
     name : getRandomElement(NAMES),
   });
