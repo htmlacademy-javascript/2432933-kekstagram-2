@@ -44,4 +44,14 @@ const Avatar = {
   MAX_NUMBER : 6,
 };
 
-export {MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar};
+const TemplateElement = {
+  PICTURE : document.querySelector('#picture').content.querySelector('.picture'),
+
+};
+
+const BoxPicture = {
+  PICTURES : document.querySelector('.pictures'),
+
+};
+
+export {MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar, BoxPicture, TemplateElement};
