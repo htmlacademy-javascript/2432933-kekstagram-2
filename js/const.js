@@ -54,4 +54,17 @@ const BoxPicture = {
 
 };
 
-export {MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar, BoxPicture, TemplateElement};
+const BigPicture = {
+  PREWIE_IMAGE  : document.querySelector('.big-picture'),
+  IMAGE         : document.querySelector('.big-picture__img img'),
+  CLOSE_IMAGE   : document.querySelector('.big-picture__cancel'),
+  LIKES_COUNT   : document.querySelector('.likes-count'),
+  SHOW_COMMENTS_COUNT  : document.querySelector('.social__comment-shown-count'),
+  TOTAL_COMMENTS_COUNT : document.querySelector('.social__comment-total-count'),
+  SOCIAL_CAPTION  : document.querySelector('.social__caption'),
+  SOCIAL_COMMENTS : document.querySelector('.social__comments'),
+  COMMENTS_LOADER : document.querySelector('.comments-loader'),
+  PARENT_ELEMENT  : document.querySelector('.big-picture__preview'),
+};
+
+export {MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar, BoxPicture, TemplateElement, BigPicture};
