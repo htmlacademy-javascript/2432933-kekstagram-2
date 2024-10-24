@@ -1,36 +1,11 @@
 import { BigPicture } from './const.js';
 import { PHOTOS } from './create-photo.js';
-import { createElement, getElementAtIndex } from './utils.js';
+import { getElementAtIndex, toggleModal } from './utils.js';
+import { BoxPicture } from './const.js';
+import { createComment } from './create-comment-element.js';
 
 let globalCommentsArray = [];
 let currentCommentsCount = 0;
-
-const closeModal = () => {
-  BigPicture.PREWIE_IMAGE.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
-
-const createComment = (comments) => {
-  BigPicture.SOCIAL_COMMENTS.replaceChildren();
-
-  comments.forEach((comment) => {
-    const socialComment = createElement('li', 'social__comment');
-    const socialPicture = createElement('img', 'social__picture');
-    const socialText = createElement('p', 'social__text');
-
-    socialPicture.src = comment.avatar;
-    socialPicture.alt = comment.name;
-    socialPicture.width = 35;
-    socialPicture.height = 35;
-
-    socialText.textContent = comment.message;
-
-    socialComment.append(socialPicture, socialText);
-
-    BigPicture.SOCIAL_COMMENTS.append(socialComment);
-  });
-};
-
 
 const loadComments = () => {
   const STEP_CLICK = 5;
@@ -45,7 +20,7 @@ const loadComments = () => {
   BigPicture.COMMENTS_LOADER.classList.toggle('hidden', shouldHide);
 };
 
-const renderPictures = (evt) =>{
+const handlePictureClick = (evt) => {
   evt.preventDefault();
   const target = evt.target.closest('.picture');
   const getPhotoByIndex = getElementAtIndex(PHOTOS);
@@ -55,8 +30,7 @@ const renderPictures = (evt) =>{
     const prewData = getPhotoByIndex(index);
     globalCommentsArray = prewData.comments;
 
-    BigPicture.PREWIE_IMAGE.classList.remove('hidden');
-    document.body.classList.add('modal-open');
+    toggleModal(BigPicture.PREWIE_IMAGE, true);
 
     BigPicture.IMAGE.src = prewData.url;
     BigPicture.LIKES_COUNT.textContent = prewData.likes;
@@ -67,12 +41,17 @@ const renderPictures = (evt) =>{
     currentCommentsCount = 0;
     loadComments();
   }
-
 };
+
+const renderPictures = () => BoxPicture.PICTURES.addEventListener('click', handlePictureClick);
+
+
+const closePicture = () => toggleModal(BigPicture.PREWIE_IMAGE, false);
+
 
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
-    closeModal();
+    closePicture();
   }
 });
 
@@ -83,10 +62,9 @@ BigPicture.PARENT_ELEMENT.addEventListener('click', (evt) => {
     loadComments();
   }
   if (target.closest('.big-picture__cancel')){
-    closeModal();
+    closePicture();
   }
 });
 
 
 export {renderPictures};
-
