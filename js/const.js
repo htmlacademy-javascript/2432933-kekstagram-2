@@ -57,6 +57,8 @@ const BoxPicture = {
 const BigPicture = {
   PREWIE_IMAGE  : document.querySelector('.big-picture'),
   IMAGE         : document.querySelector('.big-picture__img img'),
+  IMAGE_WIDTH   : 35,
+  IMAGE_HEIGHT  : 35,
   CLOSE_IMAGE   : document.querySelector('.big-picture__cancel'),
   LIKES_COUNT   : document.querySelector('.likes-count'),
   SHOW_COMMENTS_COUNT  : document.querySelector('.social__comment-shown-count'),

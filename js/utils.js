@@ -13,4 +13,9 @@ const getElementAtIndex = (array) => {
   return (index) => newArray[index];
 };
 
-export {getRandomElement, getRandomNumber, createElement, getElementAtIndex};
+const toggleModal = (element, open) => {
+  element.classList.toggle('hidden', !open);
+  document.body.classList.toggle('modal-open', open);
+};
+
+export {getRandomElement, getRandomNumber, createElement, getElementAtIndex, toggleModal};
