@@ -67,27 +67,4 @@ BigPicture.PARENT_ELEMENT.addEventListener('click', (evt) => {
   }
 });
 
-/* const Menu = {
-  start : Start,
-  playing : Playing,
-
-} */
-
-/* const App = {props} => {
-  const {game} = props;
-  const Compomemt = Menu[game]
-
-} */
-/* const fu = () => console.log('May');
-
-const познавалка = (познать) => {
-  const fund = {
-    ani : () => fu(),
-    live : 42,
-  }
-  return fund[познать]
-}
-const test = познавалка('ani')
-console.log(test); */
-
 export {renderPictures};

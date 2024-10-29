@@ -51,7 +51,6 @@ const TemplateElement = {
 
 const BoxPicture = {
   PICTURES : document.querySelector('.pictures'),
-  UL : document.querySelector('.img-list')
 };
 
 const BigPicture = {
