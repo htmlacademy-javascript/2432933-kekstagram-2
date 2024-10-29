@@ -1,6 +1,6 @@
 import { BigPicture } from './const.js';
 import { PHOTOS } from './create-photo.js';
-import { getElementAtIndex, toggleModal } from './utils.js';
+import { getElementAtIndex, toggleModal, removeListener, handleEscapeKey } from './utils.js';
 import { BoxPicture } from './const.js';
 import { createComment } from './create-comment-element.js';
 
@@ -20,8 +20,12 @@ const loadComments = () => {
   BigPicture.COMMENTS_LOADER.classList.toggle('hidden', shouldHide);
 };
 
+const handleKeydown = (evt) => {
+  handleEscapeKey(evt, BigPicture.PREWIE_IMAGE, handleKeydown);
+};
+
 const handlePictureClick = (evt) => {
-  evt.preventDefault();
+  //evt.preventDefault();
   const target = evt.target.closest('.picture');
   const getPhotoByIndex = getElementAtIndex(PHOTOS);
 
@@ -31,7 +35,7 @@ const handlePictureClick = (evt) => {
     globalCommentsArray = prewData.comments;
 
     toggleModal(BigPicture.PREWIE_IMAGE, true);
-
+    document.addEventListener('keydown', handleKeydown);
     BigPicture.IMAGE.src = prewData.url;
     BigPicture.LIKES_COUNT.textContent = prewData.likes;
 
@@ -43,17 +47,14 @@ const handlePictureClick = (evt) => {
   }
 };
 
+
 const renderPictures = () => BoxPicture.PICTURES.addEventListener('click', handlePictureClick);
 
 
-const closePicture = () => toggleModal(BigPicture.PREWIE_IMAGE, false);
-
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    closePicture();
-  }
-});
+const closePicture = () => {
+  toggleModal(BigPicture.PREWIE_IMAGE, false);
+  removeListener(handleKeydown);
+};
 
 BigPicture.PARENT_ELEMENT.addEventListener('click', (evt) => {
   const target = evt.target;
@@ -65,6 +66,5 @@ BigPicture.PARENT_ELEMENT.addEventListener('click', (evt) => {
     closePicture();
   }
 });
-
 
 export {renderPictures};
