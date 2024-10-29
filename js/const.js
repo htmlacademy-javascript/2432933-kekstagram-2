@@ -51,7 +51,7 @@ const TemplateElement = {
 
 const BoxPicture = {
   PICTURES : document.querySelector('.pictures'),
-
+  UL : document.querySelector('.img-list')
 };
 
 const BigPicture = {
@@ -69,4 +69,33 @@ const BigPicture = {
   PARENT_ELEMENT  : document.querySelector('.big-picture__preview'),
 };
 
-export {MESSAGE, NAMES, DESCRIPTION_PHOTO, PhotoConfig, Avatar, BoxPicture, TemplateElement, BigPicture};
+const UPLOAD_FORM = document.querySelector('#upload-select-image');
+
+const UPLOAD = {
+  OVERLAY : UPLOAD_FORM.querySelector('.img-upload__overlay'),
+  CANCEL  : UPLOAD_FORM.querySelector('.img-upload__cancel'),
+  IMAGE   : UPLOAD_FORM.querySelector('.img-upload__preview img'),
+  SUBMIT  : UPLOAD_FORM.querySelector('#upload-submit'),
+  FILE    : UPLOAD_FORM.querySelector('#upload-file'),
+  TEXT_DESCRIPTION : UPLOAD_FORM.querySelector('.text__description'),
+  TEXT__HASHTAGS   : UPLOAD_FORM.querySelector('.text__hashtags'),
+};
+
+const ScaleConrol = {
+  SMALLER : UPLOAD_FORM.querySelector('.scale__control--smaller'),
+  BIGGER  : UPLOAD_FORM.querySelector('.scale__control--bigger'),
+  VALUE   :  UPLOAD_FORM.querySelector('.scale__control--value'),
+};
+
+export {
+  MESSAGE,
+  NAMES,
+  DESCRIPTION_PHOTO,
+  PhotoConfig, Avatar,
+  BoxPicture,
+  TemplateElement,
+  BigPicture,
+  UPLOAD_FORM,
+  UPLOAD,
+  ScaleConrol,
+};
