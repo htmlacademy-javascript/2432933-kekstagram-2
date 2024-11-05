@@ -1,4 +1,4 @@
-import '../vendor/noUiSlider/nouislider.js';
+import '../vendor/nouislider/nouislider.js';
 import { UPLOAD, UPLOAD_FORM } from './const.js';
 import { onResetClick } from './scale-control.js';
 
