@@ -1,6 +1,5 @@
 import { BigPicture } from './const.js';
-import { PHOTOS } from './create-photo.js';
-import { getElementAtIndex, toggleModal, removeListener, handleEscapeKey } from './utils.js';
+import { getElementAtIndex, closeModalWindow, openModalWindow } from './utils.js';
 import { BoxPicture } from './const.js';
 import { createComment } from './create-comment-element.js';
 
@@ -20,22 +19,38 @@ const loadComments = () => {
   BigPicture.COMMENTS_LOADER.classList.toggle('hidden', shouldHide);
 };
 
-const handleKeydown = (evt) => {
-  handleEscapeKey(evt, BigPicture.PREWIE_IMAGE, handleKeydown);
+
+const eventTarget = (evt) => {
+  const target = evt.target;
+
+  if (target.closest('.social__comments-loader')){
+    loadComments();
+
+  }
+  if (target.closest('.big-picture__cancel')){
+    closeModalWindow(BigPicture.PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
+
+  }
 };
 
-const handlePictureClick = (evt) => {
+function handleKeydownEscape (evt) {
+  if (evt.key === 'Escape'){
+    closeModalWindow(BigPicture.PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
+  }
+}
+
+const handlePictureClick = (evt, data) => {
   //evt.preventDefault();
   const target = evt.target.closest('.picture');
-  const getPhotoByIndex = getElementAtIndex(PHOTOS);
+  const getPhotoByIndex = getElementAtIndex(data);
 
   if (target) {
     const index = target.dataset.index;
     const prewData = getPhotoByIndex(index);
     globalCommentsArray = prewData.comments;
 
-    toggleModal(BigPicture.PREWIE_IMAGE, true);
-    document.addEventListener('keydown', handleKeydown);
+    openModalWindow(BigPicture.PREVIEW_IMAGE, handleKeydownEscape);
+
     BigPicture.IMAGE.src = prewData.url;
     BigPicture.LIKES_COUNT.textContent = prewData.likes;
 
@@ -45,26 +60,12 @@ const handlePictureClick = (evt) => {
     currentCommentsCount = 0;
     loadComments();
   }
+  BigPicture.PARENT_ELEMENT.addEventListener('click', eventTarget);
+
 };
 
 
-const renderPictures = () => BoxPicture.PICTURES.addEventListener('click', handlePictureClick);
+const renderPictures = (data) => BoxPicture.PICTURES.addEventListener('click', (evt) => handlePictureClick(evt, data));
 
-
-const closePicture = () => {
-  toggleModal(BigPicture.PREWIE_IMAGE, false);
-  removeListener(handleKeydown);
-};
-
-BigPicture.PARENT_ELEMENT.addEventListener('click', (evt) => {
-  const target = evt.target;
-
-  if (target.closest('.social__comments-loader')){
-    loadComments();
-  }
-  if (target.closest('.big-picture__cancel')){
-    closePicture();
-  }
-});
 
 export {renderPictures};

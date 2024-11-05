@@ -18,13 +18,23 @@ const toggleModal = (element, open) => {
   document.body.classList.toggle('modal-open', open);
 };
 
-const removeListener = (fun) => document.removeEventListener('keydown', fun);
-
-const handleEscapeKey = (evt, element, fun) => {
-  if (evt.key === 'Escape') {
-    toggleModal(element, false);
-    removeListener(fun);
-  }
+const closeModalWindow = (element,parentElement, callBack, removeDocument) => {
+  toggleModal(element, false);
+  parentElement.removeEventListener('click', callBack);
+  document.removeEventListener('keydown', removeDocument);
 };
 
-export {getRandomElement, getRandomNumber, createElement, getElementAtIndex, toggleModal, handleEscapeKey, removeListener};
+const openModalWindow = (element, callBack) => {
+  toggleModal(element, true);
+  document.addEventListener('keydown', callBack);
+};
+
+export {
+  getRandomElement,
+  getRandomNumber,
+  createElement,
+  getElementAtIndex,
+  closeModalWindow,
+  openModalWindow,
+  toggleModal,
+};

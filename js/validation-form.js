@@ -1,7 +1,6 @@
-import { UPLOAD, UPLOAD_FORM } from './const.js';
-import { toggleModal } from './utils.js';
 import '../vendor/pristine/pristine.min.js';
-import { handleEscapeKey, removeListener } from './utils.js';
+import { UPLOAD, UPLOAD_FORM } from './const.js';
+import { openModalForm, closeModalForm } from './modal-forms.js';
 
 const config = {
   classTo : 'img-upload__field-wrapper',
@@ -22,10 +21,11 @@ const errorMessages = {
 const pristine = new Pristine(UPLOAD_FORM, config);
 
 const checkingLength = (value) => value.length <= COMMENT_MAX_LENGTH;
+
 pristine.addValidator(UPLOAD.TEXT_DESCRIPTION, checkingLength, errorMessages.maxLengthComment);
 
-const validateHashtags = (val) => {
-  const hashtags = val.trim().toLowerCase().split(/\s+/).filter(Boolean);
+const validateHashtags = (value) => {
+  const hashtags = value.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
   const hashtagsNew = new Set(hashtags).size !== hashtags.length;
   const testRegex = hashtags.every((tag) => HASHTAG_REGEX.test(tag));
@@ -63,37 +63,44 @@ const resetForm = () => {
   pristine.reset();
 };
 
-UPLOAD_FORM.addEventListener('submit', (evt) => {
+const displayMessage = (templateSelector, elementn) => {
+  const template = document
+    .querySelector(templateSelector)
+    .content.querySelector(elementn)
+    .cloneNode(true);
 
-  const test = pristine.validate();
-  if(test){
-    // eslint-disable-next-line no-console
-    console.log('true');
-  //UPLOAD.SUBMIT.disabled = true
-  }else{
-    // eslint-disable-next-line no-console
-    console.log('false');
-    evt.preventDefault();
-  }
-});
-
-
-const handleKeydown = (evt) => {
-  if (document.activeElement === UPLOAD.TEXT_DESCRIPTION || document.activeElement === UPLOAD.TEXT__HASHTAGS) {
-    return;
-  }
-  resetForm();
-  handleEscapeKey(evt, UPLOAD.OVERLAY, handleKeydown);
+  document.body.appendChild(template);
 };
 
-UPLOAD.FILE.addEventListener('click', () => {
-  toggleModal(UPLOAD.OVERLAY, true);
-  document.addEventListener('keydown', handleKeydown);
+const sendForm = async (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  const formData = new FormData(UPLOAD_FORM);
+  const postAPI = 'https://31.javascript.htmlacademy.pro/kekstagram';
+  if(!isValid){
+    //UPLOAD.SUBMIT.disabled = true;
+    return;
+  }
+  try {
+    const response = await fetch(postAPI, {
+      method : 'POST',
+      body   :  formData,
+    });
+    if(response.ok){
+      displayMessage('#success', '.success');
+      closeModalForm();
+    }
+  } catch (error) {
+    displayMessage('#error', '.error',);
+    //console.error('Ошибка:', error);
+  }finally{
+    UPLOAD.SUBMIT.disabled = false;
+  }
+};
 
-});
+UPLOAD_FORM.addEventListener('submit', sendForm);
 
-UPLOAD.CANCEL.addEventListener('click', () => {
-  toggleModal(UPLOAD.OVERLAY, false);
-  resetForm();
-  removeListener(handleKeydown);
-});
+UPLOAD.FILE.addEventListener('click', openModalForm);
+
+
+export {resetForm};

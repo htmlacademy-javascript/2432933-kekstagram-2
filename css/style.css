@@ -436,8 +436,11 @@ main {
 }
 
 .scale__control:hover,
-.scale__control:focus {
+.scale__control:focus{
   background-color: rgba(0, 0, 0, 0.3);
+}
+.scale__control:disabled{
+  background-color: rgba(128, 124, 124, 0.3);
 }
 
 .scale__control:active {
