@@ -1,5 +1,5 @@
-import { renderingThumbnails } from './rendering-thumbnails';
-import { renderPictures } from './image-viewer';
+import { renderingThumbnails } from './rendering-thumbnails.js';
+import { renderPictures } from './image-viewer.js';
 
 
 const getDataImage = async () => {
@@ -8,14 +8,16 @@ const getDataImage = async () => {
   try {
     const response = await fetch(API_DATA);
 
-    if(response.ok){
-      const data = await response.json();
-
-      renderingThumbnails(data);
-      renderPictures(data);
+    if (!response.ok) {
+      return;
     }
+
+    const data = await response.json();
+
+    renderingThumbnails(data);
+    renderPictures(data);
   } catch (error) {
-    //console.error('Ошибка при получении данных:', error);
+    console.error('Ошибка при получении данных:', error);
     const template = document.querySelector('#data-error').content.querySelector('.data-error');
     const templateElement = template.cloneNode(true);
     document.body.appendChild(templateElement);
