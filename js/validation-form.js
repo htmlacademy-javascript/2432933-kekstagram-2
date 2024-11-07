@@ -1,6 +1,8 @@
 import '../vendor/pristine/pristine.min.js';
 import { UPLOAD, UPLOAD_FORM } from './const.js';
 import { openModalForm, closeModalForm } from './modal-forms.js';
+import { displayMessage } from './displayMessage.js';
+
 
 const config = {
   classTo : 'img-upload__field-wrapper',
@@ -63,22 +65,14 @@ const resetForm = () => {
   pristine.reset();
 };
 
-const displayMessage = (templateSelector, elementn) => {
-  const template = document
-    .querySelector(templateSelector)
-    .content.querySelector(elementn)
-    .cloneNode(true);
 
-  document.body.appendChild(template);
-};
-
-const sendForm = async (evt) => {
+const sendFormData = async (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   const formData = new FormData(UPLOAD_FORM);
   const postAPI = 'https://31.javascript.htmlacademy.pro/kekstagram';
   if(!isValid){
-    //UPLOAD.SUBMIT.disabled = true;
+    displayMessage('#error', '.error', '.error__button');
     return;
   }
   try {
@@ -86,21 +80,23 @@ const sendForm = async (evt) => {
       method : 'POST',
       body   :  formData,
     });
-    if(response.ok){
-      displayMessage('#success', '.success');
-      closeModalForm();
+    if (!response.ok) {
+      throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
     }
+
+
+    displayMessage('#success', '.success', '.success__button');
+    closeModalForm();
   } catch (error) {
-    displayMessage('#error', '.error',);
-    //console.error('Ошибка:', error);
-  }finally{
-    UPLOAD.SUBMIT.disabled = false;
+    displayMessage('#error', '.error', '.error__button');
+
   }
 };
 
-UPLOAD_FORM.addEventListener('submit', sendForm);
+UPLOAD_FORM.addEventListener('submit', sendFormData);
 
-UPLOAD.FILE.addEventListener('click', openModalForm);
+UPLOAD.FILE.addEventListener('change', openModalForm);
 
 
 export {resetForm};
+

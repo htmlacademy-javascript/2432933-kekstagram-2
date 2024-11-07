@@ -29,6 +29,8 @@ const openModalWindow = (element, callBack) => {
   document.addEventListener('keydown', callBack);
 };
 
+const createPatternTemplate = (templateSelector, element) => document.querySelector(templateSelector).content.querySelector(element).cloneNode(true);
+
 export {
   getRandomElement,
   getRandomNumber,
@@ -37,4 +39,5 @@ export {
   closeModalWindow,
   openModalWindow,
   toggleModal,
+  createPatternTemplate,
 };
