@@ -32,10 +32,9 @@ function handleKeydown(evt) {
   }
 
   if (evt.key === 'Escape') {
-    closeModalWindow(UPLOAD.OVERLAY,UPLOAD.CANCEL, closeModalForm, handleKeydown);
-    closeModalActions();
+    closeModalForm();
   }
 }
 
 
-export {openModalForm, closeModalForm};
+export {openModalForm, closeModalForm, handleKeydown};
