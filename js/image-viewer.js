@@ -1,6 +1,5 @@
-import { BigPicture } from './const.js';
-import { getElementAtIndex, closeModalWindow, openModalWindow } from './utils.js';
-import { BoxPicture } from './const.js';
+import { BigPicture, PREVIEW_IMAGE } from './const.js';
+import { closeModalWindow, openModalWindow } from './utils.js';
 import { createComment } from './create-comment-element.js';
 
 let globalCommentsArray = [];
@@ -28,32 +27,35 @@ const eventTarget = (evt) => {
 
   }
   if (target.closest('.big-picture__cancel')){
-    closeModalWindow(BigPicture.PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
+    closeModalWindow(PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
 
   }
 };
 
+
 function handleKeydownEscape (evt) {
   if (evt.key === 'Escape'){
-    closeModalWindow(BigPicture.PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
+    closeModalWindow(PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
   }
 }
 
 const handlePictureClick = (evt, data) => {
-  //evt.preventDefault();
+
   const target = evt.target.closest('.picture');
-  const getPhotoByIndex = getElementAtIndex(data);
+  //const getPhotoByIndex = getElementAtIndex(data);
 
   if (target) {
-    const index = target.dataset.index;
-    const prewData = getPhotoByIndex(index);
+    evt.preventDefault();
+    //const prewData = [...data]
+    const pictureId = target.dataset.id;
+    const prewData = data.find((item) => item.id === Number(pictureId));
+
     globalCommentsArray = prewData.comments;
 
-    openModalWindow(BigPicture.PREVIEW_IMAGE, handleKeydownEscape);
+    openModalWindow(PREVIEW_IMAGE, handleKeydownEscape);
 
     BigPicture.IMAGE.src = prewData.url;
     BigPicture.LIKES_COUNT.textContent = prewData.likes;
-
     BigPicture.TOTAL_COMMENTS_COUNT.textContent = globalCommentsArray.length;
 
     BigPicture.SOCIAL_CAPTION.textContent = prewData.description;
@@ -64,8 +66,7 @@ const handlePictureClick = (evt, data) => {
 
 };
 
+//const renderPictures = (data) => PICTURES.addEventListener('click', (evt) => handlePictureClick(evt, data));
 
-const renderPictures = (data) => BoxPicture.PICTURES.addEventListener('click', (evt) => handlePictureClick(evt, data));
 
-
-export {renderPictures};
+export { handlePictureClick };

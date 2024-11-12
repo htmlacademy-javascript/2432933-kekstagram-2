@@ -1,37 +1,18 @@
-const PhotoConfig = {
-  MIN_COMMENTS : 0,
-  MAX_COMMENTS : 30,
-  MIN_LIKES : 15,
-  MAX_LIKES : 200,
-  LENGHT_ARRAY : 25,
-};
-
-const Avatar = {
-  MIN_NUMBER : 1,
-  MAX_NUMBER : 6,
-};
-
-const TemplateElement = {
-  PICTURE : document.querySelector('#picture').content.querySelector('.picture'),
-};
-
-const BoxPicture = {
-  PICTURES : document.querySelector('.pictures'),
-};
+const PICTURES = document.querySelector('.pictures');
+const PREVIEW_IMAGE = document.querySelector('.big-picture');
 
 const BigPicture = {
-  PREVIEW_IMAGE  : document.querySelector('.big-picture'),
-  IMAGE         : document.querySelector('.big-picture__img img'),
+  IMAGE         : PREVIEW_IMAGE.querySelector('.big-picture__img img'),
   IMAGE_WIDTH   : 35,
   IMAGE_HEIGHT  : 35,
-  CLOSE_IMAGE   : document.querySelector('.big-picture__cancel'),
-  LIKES_COUNT   : document.querySelector('.likes-count'),
-  SHOW_COMMENTS_COUNT  : document.querySelector('.social__comment-shown-count'),
-  TOTAL_COMMENTS_COUNT : document.querySelector('.social__comment-total-count'),
-  SOCIAL_CAPTION  : document.querySelector('.social__caption'),
-  SOCIAL_COMMENTS : document.querySelector('.social__comments'),
-  COMMENTS_LOADER : document.querySelector('.comments-loader'),
-  PARENT_ELEMENT  : document.querySelector('.big-picture__preview'),
+  CLOSE_IMAGE   : PREVIEW_IMAGE.querySelector('.big-picture__cancel'),
+  LIKES_COUNT   : PREVIEW_IMAGE.querySelector('.likes-count'),
+  SHOW_COMMENTS_COUNT  : PREVIEW_IMAGE.querySelector('.social__comment-shown-count'),
+  TOTAL_COMMENTS_COUNT : PREVIEW_IMAGE.querySelector('.social__comment-total-count'),
+  SOCIAL_CAPTION  : PREVIEW_IMAGE.querySelector('.social__caption'),
+  SOCIAL_COMMENTS : PREVIEW_IMAGE.querySelector('.social__comments'),
+  COMMENTS_LOADER : PREVIEW_IMAGE.querySelector('.comments-loader'),
+  PARENT_ELEMENT  : PREVIEW_IMAGE.querySelector('.big-picture__preview'),
 };
 
 const UPLOAD_FORM = document.querySelector('#upload-select-image');
@@ -53,13 +34,15 @@ const ScaleControl = {
   VALUE   : UPLOAD_FORM.querySelector('.scale__control--value'),
 };
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'tiff'];
+
+
 export {
-  PhotoConfig, Avatar,
-  BoxPicture,
-  TemplateElement,
+  PICTURES,
+  PREVIEW_IMAGE,
   BigPicture,
   UPLOAD_FORM,
   UPLOAD,
   ScaleControl,
-
+  FILE_TYPES,
 };

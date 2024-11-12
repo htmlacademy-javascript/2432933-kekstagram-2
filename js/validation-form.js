@@ -1,5 +1,5 @@
 import '../vendor/pristine/pristine.min.js';
-import { UPLOAD, UPLOAD_FORM } from './const.js';
+import { UPLOAD, UPLOAD_FORM, FILE_TYPES } from './const.js';
 import { openModalForm, closeModalForm } from './modal-forms.js';
 import { displayMessage } from './displayMessage.js';
 
@@ -60,21 +60,16 @@ pristine.addValidator(
 const resetForm = () => {
   UPLOAD.TEXT_DESCRIPTION.value = '';
   UPLOAD.TEXT__HASHTAGS.value = '';
-  UPLOAD.FILE = '';
+  UPLOAD.FILE.value = '';
 
   pristine.reset();
 };
 
 
-const sendFormData = async (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  const formData = new FormData(UPLOAD_FORM);
+const sendFormData = async () => {
   const postAPI = 'https://31.javascript.htmlacademy.pro/kekstagram';
-  if(!isValid){
-    displayMessage('#error', '.error', '.error__button');
-    return;
-  }
+  const formData = new FormData(UPLOAD_FORM);
+  UPLOAD.SUBMIT.disabled = true;
   try {
     const response = await fetch(postAPI, {
       method : 'POST',
@@ -84,18 +79,43 @@ const sendFormData = async (evt) => {
       throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
     }
 
-
     displayMessage('#success', '.success', '.success__button');
     closeModalForm();
   } catch (error) {
     displayMessage('#error', '.error', '.error__button');
 
+  } finally{
+    UPLOAD.SUBMIT.disabled = false;
   }
 };
 
-UPLOAD_FORM.addEventListener('submit', sendFormData);
+const handleFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if(!isValid){
+    displayMessage('#error', '.error', '.error__button');
+    return;
+  }
+  sendFormData();
 
-UPLOAD.FILE.addEventListener('change', openModalForm);
+};
+
+
+UPLOAD_FORM.addEventListener('submit', handleFormSubmit);
+
+UPLOAD.FILE.addEventListener('change', () => {
+
+  const file = UPLOAD.FILE.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+  if (matches) {
+    UPLOAD.IMAGE.src = URL.createObjectURL(file);
+    openModalForm();
+  } else {
+    UPLOAD.IMAGE.src = 'img/upload-default-image.jpg';
+
+  }
+});
 
 
 export {resetForm};
