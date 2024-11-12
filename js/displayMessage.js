@@ -10,18 +10,17 @@ const deleteTemplate = (template, selectButton) => {
     selectButton.removeEventListener('click', closeTemplate);
   };
 
-  function onClickEscape(evt) {
+  function onClickEscape (evt) {
     if (evt.key === 'Escape') {
       closeTemplate();
-
     }
   }
-  function outsideArea(evt) {
+
+  function outsideArea (evt) {
     const innerArea = template.firstElementChild;
 
     if (!innerArea.contains(evt.target)) {
       closeTemplate();
-
     }
   }
 
