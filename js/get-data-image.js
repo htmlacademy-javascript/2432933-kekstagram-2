@@ -1,12 +1,14 @@
 import { renderingThumbnails } from './render-thumbnails.js';
 import { createPatternTemplate, debounce } from './utils.js';
-import { handlePictureClick} from './image-viewer.js';
-import { PICTURES } from './const.js';
+import { onPictureClick } from './image-viewer.js';
+import { PICTURES_ELEMENT } from './const.js';
 import { createFilters, filterClickHandler } from './filter-function.js';
 
-const IMAGE_FORM = document.querySelector('.img-filters__form');
-const IMAGE_FILTER = document.querySelector('.img-filters');
-const API_DATA = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
+
+const IMAGE_FILTER_ELEMENT = document.querySelector('.img-filters');
+const IMAGE_FORM_ELEMENT = IMAGE_FILTER_ELEMENT.querySelector('.img-filters__form');
+
+const API_DATA = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
 const DELAY_DELETE_TEMPLATE = 5000;
 const RERENDER_DELAY = 500;
 
@@ -30,17 +32,17 @@ const getDataImage = async () => {
     }
     const data = await response.json();
     globalData = data;
-    IMAGE_FILTER.classList.remove('img-filters--inactive');
+    IMAGE_FILTER_ELEMENT.classList.remove('img-filters--inactive');
     renderingThumbnails(globalData);
 
     const filters = createFilters(globalData);
-    IMAGE_FORM.addEventListener('click', debounce(filterClickHandler(filters), RERENDER_DELAY));
+    IMAGE_FORM_ELEMENT.addEventListener('click', debounce(filterClickHandler(filters), RERENDER_DELAY));
   } catch (error) {
     errorMessage();
   }
 };
 
-PICTURES.addEventListener('click', (evt) => handlePictureClick(evt, globalData));
+PICTURES_ELEMENT.addEventListener('click', (evt) => onPictureClick(evt, globalData));
 
 
 export { getDataImage };

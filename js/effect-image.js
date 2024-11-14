@@ -1,10 +1,9 @@
 import '../vendor/nouislider/nouislider.js';
-import { UPLOAD, UPLOAD_FORM } from './const.js';
-import { onResetClick } from './scale-control.js';
+import { UPLOAD, UPLOAD_FORM_ELEMENT } from './const.js';
 
-
-const SLIDER_ELEMENT = UPLOAD_FORM.querySelector('.effect-level__slider');
-const EFFECTS_LIST = UPLOAD_FORM.querySelector('.effects__list');
+const SLIDER_ELEMENT = UPLOAD_FORM_ELEMENT.querySelector('.effect-level__slider');
+const EFFECTS_LIST_ELEMENT = UPLOAD_FORM_ELEMENT.querySelector('.effects__list');
+const EFFECTS_LEVEL_NUMBER_ELEMENT = UPLOAD_FORM_ELEMENT.querySelector('.effect-level__value');
 
 const effects = {
   chrome : { step : 0.1, max : 1, min : 0, effect : (level) => `grayscale(${level})` },
@@ -31,19 +30,19 @@ const updateConfig = ({min, max, step}) =>{
       max
     },
     step,
-    start : min
+    start : max
   });
 
 };
 
 const applyEffect = (name, level) => {
   const nameEffect = effects[name];
-  UPLOAD.IMAGE.style.filter = nameEffect ? nameEffect.effect(level) : 'none';
-
+  UPLOAD.IMAGE_ELEMENT.style.filter = nameEffect ? nameEffect.effect(level) : 'none';
+  EFFECTS_LEVEL_NUMBER_ELEMENT.setAttribute('value', level);
 };
 
 const toggleEffectVisibility = (isHidden) => {
-  UPLOAD.LEVEL.classList.toggle('hidden', isHidden);
+  UPLOAD.LEVEL_ELEMENT.classList.toggle('hidden', isHidden);
   if (isHidden){
     slider.set(0);
   }
@@ -56,7 +55,6 @@ const onEffectChange = (evt) => {
     const selectedEffect = target.value;
     const effectConfig = effects[selectedEffect];
 
-    onResetClick();
 
     if (effectConfig) {
       updateConfig(effectConfig);
@@ -67,14 +65,14 @@ const onEffectChange = (evt) => {
   }
 };
 
-const changeListener = () => {
-  EFFECTS_LIST.addEventListener('change', onEffectChange);
+const onChangeListener = () => {
+  EFFECTS_LIST_ELEMENT.addEventListener('change', onEffectChange);
 };
 
 slider.on('update', (values) => {
   const level = parseFloat(values[0]);
-  const name = EFFECTS_LIST.querySelector('.effects__radio:checked').value;
+  const name = EFFECTS_LIST_ELEMENT.querySelector('.effects__radio:checked').value;
   applyEffect(name, level);
 });
 
-export {changeListener, toggleEffectVisibility};
+export { onChangeListener, toggleEffectVisibility };

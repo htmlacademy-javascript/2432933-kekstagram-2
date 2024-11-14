@@ -1,72 +1,66 @@
-import { BigPicture, PREVIEW_IMAGE } from './const.js';
+import { BigPicture, PREVIEW_IMAGE_ELEMENT } from './const.js';
 import { closeModalWindow, openModalWindow } from './utils.js';
 import { createComment } from './create-comment-element.js';
 
 let globalCommentsArray = [];
 let currentCommentsCount = 0;
 
-const loadComments = () => {
+const onLoadComments = () => {
   const STEP_CLICK = 5;
   const commentsToShow = globalCommentsArray.slice(0, currentCommentsCount + STEP_CLICK);
 
   createComment(commentsToShow);
 
   currentCommentsCount = commentsToShow.length;
-  BigPicture.SHOW_COMMENTS_COUNT.textContent = currentCommentsCount;
+  BigPicture.SHOW_COMMENTS_COUNT_ELEMENT.textContent = currentCommentsCount;
 
   const shouldHide = currentCommentsCount >= globalCommentsArray.length;
-  BigPicture.COMMENTS_LOADER.classList.toggle('hidden', shouldHide);
+  BigPicture.COMMENTS_LOADER_ELEMENT.classList.toggle('hidden', shouldHide);
 };
 
-
-const eventTarget = (evt) => {
+const eventTargetBigPicture = (evt) => {
   const target = evt.target;
 
   if (target.closest('.social__comments-loader')){
-    loadComments();
+    onLoadComments();
 
   }
   if (target.closest('.big-picture__cancel')){
-    closeModalWindow(PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
-
+    closeModalWindow(PREVIEW_IMAGE_ELEMENT, BigPicture.BIG_PREVIEW_ELEMENT, eventTargetBigPicture, onKeydownEscape);
   }
 };
 
-
-function handleKeydownEscape (evt) {
+function onKeydownEscape(evt) {
   if (evt.key === 'Escape'){
-    closeModalWindow(PREVIEW_IMAGE, BigPicture.PARENT_ELEMENT, eventTarget, handleKeydownEscape);
+    closeModalWindow(PREVIEW_IMAGE_ELEMENT, BigPicture.BIG_PREVIEW_ELEMENT, eventTargetBigPicture, onKeydownEscape);
   }
 }
 
-const handlePictureClick = (evt, data) => {
-
+const onPictureClick = (evt, data) => {
   const target = evt.target.closest('.picture');
-  //const getPhotoByIndex = getElementAtIndex(data);
+  const cloneData = [...data];
 
   if (target) {
     evt.preventDefault();
-    //const prewData = [...data]
+
     const pictureId = target.dataset.id;
-    const prewData = data.find((item) => item.id === Number(pictureId));
+    const prewData = cloneData.find((item) => item.id === Number(pictureId));
 
     globalCommentsArray = prewData.comments;
 
-    openModalWindow(PREVIEW_IMAGE, handleKeydownEscape);
+    openModalWindow(PREVIEW_IMAGE_ELEMENT, onKeydownEscape);
 
-    BigPicture.IMAGE.src = prewData.url;
-    BigPicture.LIKES_COUNT.textContent = prewData.likes;
-    BigPicture.TOTAL_COMMENTS_COUNT.textContent = globalCommentsArray.length;
+    BigPicture.IMAGE_ELEMENT.src = prewData.url;
+    BigPicture.LIKES_COUNT_ELEMENT.textContent = prewData.likes;
+    BigPicture.TOTAL_COMMENTS_COUNT_ELEMENT.textContent = globalCommentsArray.length;
 
-    BigPicture.SOCIAL_CAPTION.textContent = prewData.description;
+    BigPicture.SOCIAL_CAPTION_ELEMENT.textContent = prewData.description;
     currentCommentsCount = 0;
-    loadComments();
+    onLoadComments();
   }
-  BigPicture.PARENT_ELEMENT.addEventListener('click', eventTarget);
+  BigPicture.BIG_PREVIEW_ELEMENT.addEventListener('click', eventTargetBigPicture);
 
 };
 
-//const renderPictures = (data) => PICTURES.addEventListener('click', (evt) => handlePictureClick(evt, data));
 
-
-export { handlePictureClick };
+export { onPictureClick };

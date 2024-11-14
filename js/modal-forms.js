@@ -1,33 +1,33 @@
 import { resetForm } from './validation-form.js';
 import {openModalWindow, closeModalWindow } from './utils.js';
 import {listenersScaleControl, removeListenersScaleControl} from './scale-control.js';
-import { changeListener,toggleEffectVisibility } from './effect-image.js';
-import { UPLOAD, UPLOAD_FORM } from './const.js';
+import { onChangeListener,toggleEffectVisibility } from './effect-image.js';
+import { UPLOAD, UPLOAD_FORM_ELEMENT } from './const.js';
 
 const closeModalActions = () => {
   resetForm();
   removeListenersScaleControl();
   toggleEffectVisibility(false);
-  UPLOAD_FORM.reset();
+  UPLOAD_FORM_ELEMENT.reset();
 };
 
 
 const closeModalForm = () => {
-  closeModalWindow(UPLOAD.OVERLAY,UPLOAD.CANCEL, closeModalForm, handleKeydown);
+  closeModalWindow(UPLOAD.OVERLAY_ELEMENT, UPLOAD.CANCEL_ELEMENT, closeModalForm, onHandleKeydown);
   closeModalActions();
 };
 
 
 const openModalForm = () => {
-  openModalWindow(UPLOAD.OVERLAY, handleKeydown);
-  UPLOAD.CANCEL.addEventListener('click', closeModalForm);
+  openModalWindow(UPLOAD.OVERLAY_ELEMENT, onHandleKeydown);
+  UPLOAD.CANCEL_ELEMENT.addEventListener('click', closeModalForm);
   listenersScaleControl();
-  changeListener();
+  onChangeListener();
   toggleEffectVisibility(true);
 };
 
-function handleKeydown(evt) {
-  if (document.activeElement === UPLOAD.TEXT_DESCRIPTION || document.activeElement === UPLOAD.TEXT__HASHTAGS) {
+function onHandleKeydown(evt) {
+  if (document.activeElement === UPLOAD.TEXT_DESCRIPTION_ELEMENT || document.activeElement === UPLOAD.TEXT__HASHTAGS_ELEMENT) {
     return;
   }
 
@@ -37,4 +37,4 @@ function handleKeydown(evt) {
 }
 
 
-export {openModalForm, closeModalForm, handleKeydown};
+export {openModalForm, closeModalForm, onHandleKeydown};

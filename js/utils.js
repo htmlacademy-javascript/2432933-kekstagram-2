@@ -1,7 +1,3 @@
-const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const getRandomElement = (array) => array[getRandomNumber(0, array.length - 1)];
-
 const createElement = (tagName, className) => {
   const element = document.createElement(tagName);
   element.classList.add(className);
@@ -11,7 +7,7 @@ const createElement = (tagName, className) => {
 const getElementAtIndex = (array) => {
   const newArray = [...array];
   return (index) => newArray[index];
-};
+};///////
 
 const toggleModal = (element, open) => {
   element.classList.toggle('hidden', !open);
@@ -19,7 +15,7 @@ const toggleModal = (element, open) => {
 };
 
 
-const closeModalWindow = (element,parentElement, callBack, removeDocument) => { //
+const closeModalWindow = (element, parentElement, callBack, removeDocument) => { //
   toggleModal(element, false);
   parentElement.removeEventListener('click', callBack);
   document.removeEventListener('keydown', removeDocument);
@@ -30,7 +26,12 @@ const openModalWindow = (element, callBack) => {
   document.addEventListener('keydown', callBack);
 };
 
-const createPatternTemplate = (templateSelector, element) => document.querySelector(templateSelector).content.querySelector(element).cloneNode(true);
+const createPatternTemplate = (templateSelector, element) =>
+  document
+    .querySelector(templateSelector)
+    .content.querySelector(element)
+    .cloneNode(true);
+
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId;
@@ -42,8 +43,6 @@ const debounce = (callback, timeoutDelay) => {
 
 
 export {
-  getRandomElement,
-  getRandomNumber,
   createElement,
   getElementAtIndex,
   closeModalWindow,

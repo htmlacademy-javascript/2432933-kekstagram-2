@@ -2,23 +2,23 @@ import { BigPicture } from './const.js';
 import { createElement } from './utils.js';
 
 const createComment = (comments) => {
-  BigPicture.SOCIAL_COMMENTS.replaceChildren();
+  BigPicture.SOCIAL_COMMENTS_ELEMENT.replaceChildren();
 
   comments.forEach((comment) => {
-    const socialComment = createElement('li', 'social__comment');
-    const socialPicture = createElement('img', 'social__picture');
-    const socialText = createElement('p', 'social__text');
+    const socialCommentElement = createElement('li', 'social__comment');
+    const socialPictureElement = createElement('img', 'social__picture');
+    const socialTextElement = createElement('p', 'social__text');
 
-    socialPicture.src = comment.avatar;
-    socialPicture.alt = comment.name;
-    socialPicture.width = BigPicture.IMAGE_WIDTH;
-    socialPicture.height = BigPicture.IMAGE_HEIGHT;
+    socialPictureElement.src = comment.avatar;
+    socialPictureElement.alt = comment.name;
+    socialPictureElement.width = BigPicture.IMAGE_WIDTH;
+    socialPictureElement.height = BigPicture.IMAGE_HEIGHT;
 
-    socialText.textContent = comment.message;
+    socialTextElement.textContent = comment.message;
 
-    socialComment.append(socialPicture, socialText);
+    socialCommentElement.append(socialPictureElement, socialTextElement);
 
-    BigPicture.SOCIAL_COMMENTS.append(socialComment);
+    BigPicture.SOCIAL_COMMENTS_ELEMENT.append(socialCommentElement);
   });
 };
 
