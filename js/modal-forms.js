@@ -1,40 +1,49 @@
 import { resetForm } from './validation-form.js';
-import {openModalWindow, closeModalWindow } from './utils.js';
+import { uploud, uploadFormElement } from './const.js';
+import {toggleModal } from './utils.js';
 import {listenersScaleControl, removeListenersScaleControl} from './scale-control.js';
-import { changeListener,toggleEffectVisibility } from './effect-image.js';
-import { UPLOAD, UPLOAD_FORM } from './const.js';
+import { onChangeListener,toggleEffectVisibility } from './effect-image.js';
+
 
 const closeModalActions = () => {
   resetForm();
   removeListenersScaleControl();
   toggleEffectVisibility(false);
-  UPLOAD_FORM.reset();
+  uploadFormElement.reset();
 };
 
+const modalsForm = {
+  close() {
+    document.removeEventListener('keydown', modalsForm.closeEscape);
+    uploud.cancelElement.removeEventListener('click', modalsForm.close);
+    toggleModal(uploud.overlayElement, false);
+    closeModalActions();
+  },
 
-const closeModalForm = () => {
-  closeModalWindow(UPLOAD.OVERLAY,UPLOAD.CANCEL, closeModalForm, handleKeydown);
-  closeModalActions();
+  closeEscape(evt) {
+    if (document.activeElement === uploud.textDescriptionElement || document.activeElement === uploud.textHashtagsElement) {
+      return;
+    }
+    if (evt.key === 'Escape') {
+      modalsForm.close();
+    }
+  },
+  open() {
+    toggleModal(uploud.overlayElement, true);
+    uploud.cancelElement.addEventListener('click', modalsForm.close);
+    document.addEventListener('keydown', modalsForm.closeEscape);
+  }
+
 };
 
+const closeModalForm = () => modalsForm.close();
 
 const openModalForm = () => {
-  openModalWindow(UPLOAD.OVERLAY, handleKeydown);
-  UPLOAD.CANCEL.addEventListener('click', closeModalForm);
+  modalsForm.open();
   listenersScaleControl();
-  changeListener();
+  onChangeListener();
   toggleEffectVisibility(true);
 };
 
-function handleKeydown(evt) {
-  if (document.activeElement === UPLOAD.TEXT_DESCRIPTION || document.activeElement === UPLOAD.TEXT__HASHTAGS) {
-    return;
-  }
 
-  if (evt.key === 'Escape') {
-    closeModalForm();
-  }
-}
-
-
-export {openModalForm, closeModalForm, handleKeydown};
+export {openModalForm, closeModalForm, modalsForm};

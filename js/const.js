@@ -1,48 +1,62 @@
-const PICTURES = document.querySelector('.pictures');
-const PREVIEW_IMAGE = document.querySelector('.big-picture');
+const picturesElement = document.querySelector('.pictures');
+const previewImageElement = document.querySelector('.big-picture');
+const uploadFormElement = document.querySelector('#upload-select-image');
 
-const BigPicture = {
-  IMAGE         : PREVIEW_IMAGE.querySelector('.big-picture__img img'),
-  IMAGE_WIDTH   : 35,
-  IMAGE_HEIGHT  : 35,
-  CLOSE_IMAGE   : PREVIEW_IMAGE.querySelector('.big-picture__cancel'),
-  LIKES_COUNT   : PREVIEW_IMAGE.querySelector('.likes-count'),
-  SHOW_COMMENTS_COUNT  : PREVIEW_IMAGE.querySelector('.social__comment-shown-count'),
-  TOTAL_COMMENTS_COUNT : PREVIEW_IMAGE.querySelector('.social__comment-total-count'),
-  SOCIAL_CAPTION  : PREVIEW_IMAGE.querySelector('.social__caption'),
-  SOCIAL_COMMENTS : PREVIEW_IMAGE.querySelector('.social__comments'),
-  COMMENTS_LOADER : PREVIEW_IMAGE.querySelector('.comments-loader'),
-  PARENT_ELEMENT  : PREVIEW_IMAGE.querySelector('.big-picture__preview'),
+const API = {
+  GET_DATA : 'https://32.javascript.htmlacademy.pro/kekstagram/data',
+  POST_DATA : 'https://32.javascript.htmlacademy.pro/kekstagram',
 };
 
-const UPLOAD_FORM = document.querySelector('#upload-select-image');
 
-const UPLOAD = {
-  OVERLAY          : UPLOAD_FORM.querySelector('.img-upload__overlay'),
-  CANCEL           : UPLOAD_FORM.querySelector('.img-upload__cancel'),
-  IMAGE            : UPLOAD_FORM.querySelector('.img-upload__preview img'),
-  SUBMIT           : UPLOAD_FORM.querySelector('#upload-submit'),
-  FILE             : UPLOAD_FORM.querySelector('#upload-file'),
-  TEXT_DESCRIPTION : UPLOAD_FORM.querySelector('.text__description'),
-  TEXT__HASHTAGS   : UPLOAD_FORM.querySelector('.text__hashtags'),
-  LEVEL            : UPLOAD_FORM.querySelector('.img-upload__effect-level')
+const bigPicture = {
+  IMAGE_WIDTH                : 35,
+  IMAGE_HEIGHT               : 35,
+  imageElement               : previewImageElement.querySelector('.big-picture__img img'),
+  closeImageElement          : previewImageElement.querySelector('.big-picture__cancel'),
+  likesCountElement          : previewImageElement.querySelector('.likes-count'),
+  bigPreviewElement          : previewImageElement.querySelector('.big-picture__preview'),
+  showCommentsCountElement   : previewImageElement.querySelector('.social__comment-shown-count'),
+  totalCommentsCountElement  : previewImageElement.querySelector('.social__comment-total-count'),
+  socialCaptionElement       : previewImageElement.querySelector('.social__caption'),
+  socialCommentsElement      : previewImageElement.querySelector('.social__comments'),
+  commentsLoaderElement      : previewImageElement.querySelector('.comments-loader'),
 };
 
-const ScaleControl = {
-  SMALLER : UPLOAD_FORM.querySelector('.scale__control--smaller'),
-  BIGGER  : UPLOAD_FORM.querySelector('.scale__control--bigger'),
-  VALUE   : UPLOAD_FORM.querySelector('.scale__control--value'),
+const uploud = {
+  overlayElement          : uploadFormElement.querySelector('.img-upload__overlay'),
+  cancelElement           : uploadFormElement.querySelector('.img-upload__cancel'),
+  imageElement            : uploadFormElement.querySelector('.img-upload__preview img'),
+  submitElement           : uploadFormElement.querySelector('#upload-submit'),
+  fileElement             : uploadFormElement.querySelector('#upload-file'),
+  textDescriptionElement  : uploadFormElement.querySelector('.text__description'),
+  textHashtagsElement     : uploadFormElement.querySelector('.text__hashtags'),
+  levelElement            : uploadFormElement.querySelector('.img-upload__effect-level')
 };
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'tiff'];
+const scaleControl = {
+  smallerElement : uploadFormElement.querySelector('.scale__control--smaller'),
+  biggerElement  : uploadFormElement.querySelector('.scale__control--bigger'),
+  valueElement   : uploadFormElement.querySelector('.scale__control--value'),
+};
+
+const sliderEffect = {
+  sliderElement               : uploadFormElement.querySelector('.effect-level__slider'),
+  effectsListElement          : uploadFormElement.querySelector('.effects__list'),
+  effectsLevelValueElement    : uploadFormElement.querySelector('.effect-level__value'),
+};
+
+
+const FILES_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'tiff'];
 
 
 export {
-  PICTURES,
-  PREVIEW_IMAGE,
-  BigPicture,
-  UPLOAD_FORM,
-  UPLOAD,
-  ScaleControl,
-  FILE_TYPES,
+  picturesElement,
+  previewImageElement,
+  bigPicture,
+  uploadFormElement,
+  uploud,
+  scaleControl,
+  FILES_TYPES,
+  API,
+  sliderEffect
 };

@@ -1,17 +1,20 @@
 import '../vendor/pristine/pristine.min.js';
-import { UPLOAD, UPLOAD_FORM, FILE_TYPES } from './const.js';
+import { uploud, uploadFormElement, FILES_TYPES, API } from './const.js';
 import { openModalForm, closeModalForm } from './modal-forms.js';
 import { displayMessage } from './displayMessage.js';
 
 
-const config = {
+const effectPreviewElement = uploadFormElement.querySelectorAll('.effects__preview');
+
+const COMMENT_MAX_LENGTH = 140;
+const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const configPristine = {
   classTo : 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag : 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
 };
-
-const COMMENT_MAX_LENGTH = 140;
 
 const errorMessages = {
   maxLengthComment: `длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`,
@@ -20,15 +23,14 @@ const errorMessages = {
   replayHashTag : 'хэштеги повторяются',
 };
 
-const pristine = new Pristine(UPLOAD_FORM, config);
+const pristine = new Pristine(uploadFormElement, configPristine);
 
 const checkingLength = (value) => value.length <= COMMENT_MAX_LENGTH;
 
-pristine.addValidator(UPLOAD.TEXT_DESCRIPTION, checkingLength, errorMessages.maxLengthComment);
+pristine.addValidator(uploud.textDescriptionElement, checkingLength, errorMessages.maxLengthComment);
 
 const validateHashtags = (value) => {
   const hashtags = value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
   const hashtagsNew = new Set(hashtags).size !== hashtags.length;
   const testRegex = hashtags.every((tag) => HASHTAG_REGEX.test(tag));
 
@@ -51,27 +53,26 @@ const validateHashtags = (value) => {
 };
 
 pristine.addValidator(
-  UPLOAD.TEXT__HASHTAGS,
+  uploud.textHashtagsElement,
   (value) => validateHashtags(value) === true,
   validateHashtags,
-
 );
 
 const resetForm = () => {
-  UPLOAD.TEXT_DESCRIPTION.value = '';
-  UPLOAD.TEXT__HASHTAGS.value = '';
-  UPLOAD.FILE.value = '';
+  uploud.textDescriptionElement.value = '';
+  uploud.textHashtagsElement.value = '';
+  uploud.fileElement.value = '';
 
   pristine.reset();
 };
 
 
 const sendFormData = async () => {
-  const postAPI = 'https://31.javascript.htmlacademy.pro/kekstagram';
-  const formData = new FormData(UPLOAD_FORM);
-  UPLOAD.SUBMIT.disabled = true;
+  const formData = new FormData(uploadFormElement);
+  uploud.submitElement.disabled = true;
+
   try {
-    const response = await fetch(postAPI, {
+    const response = await fetch(API.POST_DATA, {
       method : 'POST',
       body   :  formData,
     });
@@ -85,38 +86,43 @@ const sendFormData = async () => {
     displayMessage('#error', '.error', '.error__button');
 
   } finally{
-    UPLOAD.SUBMIT.disabled = false;
+    uploud.submitElement.disabled = false;
   }
 };
 
-const handleFormSubmit = (evt) => {
+const onFormSubmit = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if(!isValid){
-    displayMessage('#error', '.error', '.error__button');
     return;
   }
   sendFormData();
+};
 
+const backgrounPreviewdImage = (imageUrl) => {
+  effectPreviewElement.forEach((element) => {
+    element.style.backgroundImage = `url(${imageUrl})`;
+  });
 };
 
 
-UPLOAD_FORM.addEventListener('submit', handleFormSubmit);
-
-UPLOAD.FILE.addEventListener('change', () => {
-
-  const file = UPLOAD.FILE.files[0];
+const onUploudFile = () => {
+  const file = uploud.fileElement.files[0];
+  const imageUrl = URL.createObjectURL(file);
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+  const matches = FILES_TYPES.some((type) => fileName.endsWith(type));
+
   if (matches) {
-    UPLOAD.IMAGE.src = URL.createObjectURL(file);
+    uploud.imageElement.src = imageUrl;
+    backgrounPreviewdImage(imageUrl);
     openModalForm();
-  } else {
-    UPLOAD.IMAGE.src = 'img/upload-default-image.jpg';
-
+    uploadFormElement.addEventListener('submit', onFormSubmit);
   }
-});
+};
 
+
+uploud.fileElement.addEventListener('change', onUploudFile);
 
 export {resetForm};
+
 
