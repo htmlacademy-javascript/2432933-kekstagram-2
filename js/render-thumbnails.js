@@ -20,14 +20,14 @@ const createPictureElement = (pictureData) => {
 };
 
 
-const renderingThumbnails = (arr) => {
+const renderingThumbnails = (arrays) => {
   const PICTURE_ELEMENT = picturesElement.querySelectorAll('.picture');
   PICTURE_ELEMENT.forEach((picture) => picture.remove());
 
 
   const fragment = document.createDocumentFragment();
 
-  arr.forEach((element) => {
+  arrays.forEach((element) => {
 
     const pictureElement = createPictureElement(element);
     fragment.append(pictureElement);
