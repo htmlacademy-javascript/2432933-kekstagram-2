@@ -1,44 +1,40 @@
-import { onHandleKeydown } from './modal-forms.js';
 import { createPatternTemplate } from './utils.js';
-
+import { modalsForm } from './modal-forms.js';
 const deleteTemplate = (template, selectButton) => {
-  const onCloseTemplate = () => {
-    template.remove();
-    document.addEventListener('keydown', onHandleKeydown);
-    document.removeEventListener('keydown', onClickEscape);
-    document.removeEventListener('click', onOutsideArea);
-    selectButton.removeEventListener('click', onCloseTemplate);
+  const handlers = {
+    delete() {
+      template.remove();
+      document.addEventListener('keydown', modalsForm.onClickEscape);
+      document.removeEventListener('keydown', handlers.deleteEscape);
+      document.removeEventListener('click', handlers.outsideArea);
+      selectButton.removeEventListener('click', handlers.delete);
+    },
+
+    deleteEscape(evt) {
+      if (evt.key === 'Escape') {
+        handlers.delete();
+      }
+    },
+
+    outsideArea(evt) {
+      const innerArea = template.firstElementChild;
+      if (!innerArea.contains(evt.target)) {
+        handlers.delete();
+      }
+    }
   };
 
-  function onClickEscape (evt) {
-    if (evt.key === 'Escape') {
-      onCloseTemplate();
-    }
-  }
-
-  function onOutsideArea (evt) {
-    const innerArea = template.firstElementChild;
-
-    if (!innerArea.contains(evt.target)) {
-      onCloseTemplate();
-    }
-  }
-
-  selectButton.addEventListener('click', onCloseTemplate);
-  document.addEventListener('click', onOutsideArea);
-  document.addEventListener('keydown', onClickEscape);
-
+  selectButton.addEventListener('click', handlers.delete);
+  document.addEventListener('click', handlers.outsideArea);
+  document.addEventListener('keydown', handlers.deleteEscape);
 };
 
-
 const displayMessage = (templateSelector, elementn, selectButton) => {
-
   const template = createPatternTemplate(templateSelector, elementn);
   const closeButton = template.querySelector(selectButton);
-  document.removeEventListener('keydown', onHandleKeydown);//
-
-  deleteTemplate(template, closeButton);
   document.body.appendChild(template);
+  deleteTemplate(template, closeButton);
+  document.removeEventListener('keydown', modalsForm.onClickEscape);
 };
 
 export { displayMessage };

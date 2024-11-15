@@ -1,5 +1,5 @@
 import { createPatternTemplate} from './utils.js';
-import { PICTURES_ELEMENT } from './const.js';
+import { picturesElement } from './const.js';
 
 const createPictureElement = (pictureData) => {
   const {url, description, likes = 0, comments = [], id} = pictureData;
@@ -21,7 +21,7 @@ const createPictureElement = (pictureData) => {
 
 
 const renderingThumbnails = (arr) => {
-  const PICTURE_ELEMENT = PICTURES_ELEMENT.querySelectorAll('.picture');
+  const PICTURE_ELEMENT = picturesElement.querySelectorAll('.picture');
   PICTURE_ELEMENT.forEach((picture) => picture.remove());
 
 
@@ -32,7 +32,7 @@ const renderingThumbnails = (arr) => {
     const pictureElement = createPictureElement(element);
     fragment.append(pictureElement);
   });
-  PICTURES_ELEMENT.append(fragment);
+  picturesElement.append(fragment);
 };
 
 

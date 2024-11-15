@@ -1,40 +1,49 @@
 import { resetForm } from './validation-form.js';
-import {openModalWindow, closeModalWindow } from './utils.js';
+import { uploud, uploadFormElement } from './const.js';
+import {toggleModal } from './utils.js';
 import {listenersScaleControl, removeListenersScaleControl} from './scale-control.js';
 import { onChangeListener,toggleEffectVisibility } from './effect-image.js';
-import { UPLOAD, UPLOAD_FORM_ELEMENT } from './const.js';
+
 
 const closeModalActions = () => {
   resetForm();
   removeListenersScaleControl();
   toggleEffectVisibility(false);
-  UPLOAD_FORM_ELEMENT.reset();
+  uploadFormElement.reset();
 };
 
+const modalsForm = {
+  close() {
+    document.removeEventListener('keydown', modalsForm.closeEscape);
+    uploud.cancelElement.removeEventListener('click', modalsForm.close);
+    toggleModal(uploud.overlayElement, false);
+    closeModalActions();
+  },
 
-const closeModalForm = () => {
-  closeModalWindow(UPLOAD.OVERLAY_ELEMENT, UPLOAD.CANCEL_ELEMENT, closeModalForm, onHandleKeydown);
-  closeModalActions();
+  closeEscape(evt) {
+    if (document.activeElement === uploud.textDescriptionElement || document.activeElement === uploud.textHashtagsElement) {
+      return;
+    }
+    if (evt.key === 'Escape') {
+      modalsForm.close();
+    }
+  },
+  open() {
+    toggleModal(uploud.overlayElement, true);
+    uploud.cancelElement.addEventListener('click', modalsForm.close);
+    document.addEventListener('keydown', modalsForm.closeEscape);
+  }
+
 };
 
+const closeModalForm = () => modalsForm.close();
 
 const openModalForm = () => {
-  openModalWindow(UPLOAD.OVERLAY_ELEMENT, onHandleKeydown);
-  UPLOAD.CANCEL_ELEMENT.addEventListener('click', closeModalForm);
+  modalsForm.open();
   listenersScaleControl();
   onChangeListener();
   toggleEffectVisibility(true);
 };
 
-function onHandleKeydown(evt) {
-  if (document.activeElement === UPLOAD.TEXT_DESCRIPTION_ELEMENT || document.activeElement === UPLOAD.TEXT__HASHTAGS_ELEMENT) {
-    return;
-  }
 
-  if (evt.key === 'Escape') {
-    closeModalForm();
-  }
-}
-
-
-export {openModalForm, closeModalForm, onHandleKeydown};
+export {openModalForm, closeModalForm, modalsForm};

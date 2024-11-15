@@ -1,4 +1,4 @@
-import { ScaleControl, UPLOAD } from './const.js';
+import { scaleControl, uploud } from './const.js';
 
 const INITIAL_SCALE = 100;
 const MIN_SCALE = 25;
@@ -7,13 +7,13 @@ const STEP = 25;
 let countPercent = INITIAL_SCALE;
 
 const updateScale = (count) => {
-  ScaleControl.VALUE_ELEMENT.value = `${count}%`;
-  UPLOAD.IMAGE_ELEMENT.style.transform = `scale(${(count / 100)})`;
+  scaleControl.valueElement.value = `${count}%`;
+  uploud.imageElement.style.transform = `scale(${(count / 100)})`;
 };
 
 const updateButtonsState = (count) =>{
-  ScaleControl.BIGGER_ELEMENT.disabled = count === MAX_SCALE;
-  ScaleControl.SMALLER_ELEMENT.disabled = count === MIN_SCALE;
+  scaleControl.biggerElement.disabled = count === MAX_SCALE;
+  scaleControl.smallerElement.disabled = count === MIN_SCALE;
 };
 
 const updateCount = (newCount) => {
@@ -34,14 +34,14 @@ const onSmallerClick = () => clickCounter.decreasing();
 const onResetClick = () => clickCounter.reset();
 
 const listenersScaleControl = () => {
-  ScaleControl.BIGGER_ELEMENT.addEventListener('click', onBiggerClick);
-  ScaleControl.SMALLER_ELEMENT.addEventListener('click', onSmallerClick);
+  scaleControl.biggerElement.addEventListener('click', onBiggerClick);
+  scaleControl.smallerElement.addEventListener('click', onSmallerClick);
   onResetClick();
 };
 
 const removeListenersScaleControl = () => {
-  ScaleControl.BIGGER_ELEMENT.removeEventListener('click', onBiggerClick);
-  ScaleControl.SMALLER_ELEMENT.removeEventListener('click', onSmallerClick);
+  scaleControl.biggerElement.removeEventListener('click', onBiggerClick);
+  scaleControl.smallerElement.removeEventListener('click', onSmallerClick);
   onResetClick();
 };
 

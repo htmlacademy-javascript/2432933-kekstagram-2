@@ -1,8 +1,8 @@
-import { BigPicture } from './const.js';
+import { bigPicture } from './const.js';
 import { createElement } from './utils.js';
 
 const createComment = (comments) => {
-  BigPicture.SOCIAL_COMMENTS_ELEMENT.replaceChildren();
+  bigPicture.socialCommentsElement.replaceChildren();
 
   comments.forEach((comment) => {
     const socialCommentElement = createElement('li', 'social__comment');
@@ -11,14 +11,14 @@ const createComment = (comments) => {
 
     socialPictureElement.src = comment.avatar;
     socialPictureElement.alt = comment.name;
-    socialPictureElement.width = BigPicture.IMAGE_WIDTH;
-    socialPictureElement.height = BigPicture.IMAGE_HEIGHT;
+    socialPictureElement.width = bigPicture.IMAGE_WIDTH;
+    socialPictureElement.height = bigPicture.IMAGE_HEIGHT;
 
     socialTextElement.textContent = comment.message;
 
     socialCommentElement.append(socialPictureElement, socialTextElement);
 
-    BigPicture.SOCIAL_COMMENTS_ELEMENT.append(socialCommentElement);
+    bigPicture.socialCommentsElement.append(socialCommentElement);
   });
 };
 

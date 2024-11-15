@@ -1,49 +1,62 @@
-const PICTURES_ELEMENT = document.querySelector('.pictures');
-const PREVIEW_IMAGE_ELEMENT = document.querySelector('.big-picture');
-const UPLOAD_FORM_ELEMENT = document.querySelector('#upload-select-image');
+const picturesElement = document.querySelector('.pictures');
+const previewImageElement = document.querySelector('.big-picture');
+const uploadFormElement = document.querySelector('#upload-select-image');
 
-
-const BigPicture = {
-  IMAGE_WIDTH   : 35,
-  IMAGE_HEIGHT  : 35,
-  IMAGE_ELEMENT                : PREVIEW_IMAGE_ELEMENT.querySelector('.big-picture__img img'),
-  CLOSE_IMAGE_ELEMENT          : PREVIEW_IMAGE_ELEMENT.querySelector('.big-picture__cancel'),
-  LIKES_COUNT_ELEMENT          : PREVIEW_IMAGE_ELEMENT.querySelector('.likes-count'),
-  BIG_PREVIEW_ELEMENT          : PREVIEW_IMAGE_ELEMENT.querySelector('.big-picture__preview'),
-  SHOW_COMMENTS_COUNT_ELEMENT  : PREVIEW_IMAGE_ELEMENT.querySelector('.social__comment-shown-count'),
-  TOTAL_COMMENTS_COUNT_ELEMENT : PREVIEW_IMAGE_ELEMENT.querySelector('.social__comment-total-count'),
-  SOCIAL_CAPTION_ELEMENT       : PREVIEW_IMAGE_ELEMENT.querySelector('.social__caption'),
-  SOCIAL_COMMENTS_ELEMENT      : PREVIEW_IMAGE_ELEMENT.querySelector('.social__comments'),
-  COMMENTS_LOADER_ELEMENT      : PREVIEW_IMAGE_ELEMENT.querySelector('.comments-loader'),
-
+const API = {
+  GET_DATA : 'https://32.javascript.htmlacademy.pro/kekstagram/data',
+  POST_DATA : 'https://32.javascript.htmlacademy.pro/kekstagram',
 };
 
-const UPLOAD = {
-  OVERLAY_ELEMENT          : UPLOAD_FORM_ELEMENT.querySelector('.img-upload__overlay'),
-  CANCEL_ELEMENT           : UPLOAD_FORM_ELEMENT.querySelector('.img-upload__cancel'),
-  IMAGE_ELEMENT            : UPLOAD_FORM_ELEMENT.querySelector('.img-upload__preview img'),
-  SUBMIT_ELEMENT           : UPLOAD_FORM_ELEMENT.querySelector('#upload-submit'),
-  FILE_ELEMENT             : UPLOAD_FORM_ELEMENT.querySelector('#upload-file'),
-  TEXT_DESCRIPTION_ELEMENT : UPLOAD_FORM_ELEMENT.querySelector('.text__description'),
-  TEXT__HASHTAGS_ELEMENT   : UPLOAD_FORM_ELEMENT.querySelector('.text__hashtags'),
-  LEVEL_ELEMENT            : UPLOAD_FORM_ELEMENT.querySelector('.img-upload__effect-level')
+
+const bigPicture = {
+  IMAGE_WIDTH                : 35,
+  IMAGE_HEIGHT               : 35,
+  imageElement               : previewImageElement.querySelector('.big-picture__img img'),
+  closeImageElement          : previewImageElement.querySelector('.big-picture__cancel'),
+  likesCountElement          : previewImageElement.querySelector('.likes-count'),
+  bigPreviewElement          : previewImageElement.querySelector('.big-picture__preview'),
+  showCommentsCountElement   : previewImageElement.querySelector('.social__comment-shown-count'),
+  totalCommentsCountElement  : previewImageElement.querySelector('.social__comment-total-count'),
+  socialCaptionElement       : previewImageElement.querySelector('.social__caption'),
+  socialCommentsElement      : previewImageElement.querySelector('.social__comments'),
+  commentsLoaderElement      : previewImageElement.querySelector('.comments-loader'),
 };
 
-const ScaleControl = {
-  SMALLER_ELEMENT : UPLOAD_FORM_ELEMENT.querySelector('.scale__control--smaller'),
-  BIGGER_ELEMENT  : UPLOAD_FORM_ELEMENT.querySelector('.scale__control--bigger'),
-  VALUE_ELEMENT   : UPLOAD_FORM_ELEMENT.querySelector('.scale__control--value'),
+const uploud = {
+  overlayElement          : uploadFormElement.querySelector('.img-upload__overlay'),
+  cancelElement           : uploadFormElement.querySelector('.img-upload__cancel'),
+  imageElement            : uploadFormElement.querySelector('.img-upload__preview img'),
+  submitElement           : uploadFormElement.querySelector('#upload-submit'),
+  fileElement             : uploadFormElement.querySelector('#upload-file'),
+  textDescriptionElement  : uploadFormElement.querySelector('.text__description'),
+  textHashtagsElement     : uploadFormElement.querySelector('.text__hashtags'),
+  levelElement            : uploadFormElement.querySelector('.img-upload__effect-level')
 };
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'tiff'];
+const scaleControl = {
+  smallerElement : uploadFormElement.querySelector('.scale__control--smaller'),
+  biggerElement  : uploadFormElement.querySelector('.scale__control--bigger'),
+  valueElement   : uploadFormElement.querySelector('.scale__control--value'),
+};
+
+const sliderEffect = {
+  sliderElement               : uploadFormElement.querySelector('.effect-level__slider'),
+  effectsListElement          : uploadFormElement.querySelector('.effects__list'),
+  effectsLevelValueElement    : uploadFormElement.querySelector('.effect-level__value'),
+};
+
+
+const FILES_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'tiff'];
 
 
 export {
-  PICTURES_ELEMENT,
-  PREVIEW_IMAGE_ELEMENT,
-  BigPicture,
-  UPLOAD_FORM_ELEMENT,
-  UPLOAD,
-  ScaleControl,
-  FILE_TYPES,
+  picturesElement,
+  previewImageElement,
+  bigPicture,
+  uploadFormElement,
+  uploud,
+  scaleControl,
+  FILES_TYPES,
+  API,
+  sliderEffect
 };
