@@ -1,6 +1,6 @@
 import { renderingThumbnails } from './render-thumbnails.js';
 
-const filtersButtons = document.querySelectorAll('.img-filters__button');
+const filtersButtonsElement = document.querySelectorAll('.img-filters__button');
 const COUNT = 10;
 
 const createFilters = (data) => {
@@ -15,7 +15,7 @@ const createFilters = (data) => {
 };
 
 const toggleActiveClass = (target) => {
-  filtersButtons.forEach((button) => button.classList.toggle('img-filters__button--active', button === target));
+  filtersButtonsElement.forEach((button) => button.classList.toggle('img-filters__button--active', button === target));
 };
 
 const filterClickHandler = (filters) => (evt) => {
