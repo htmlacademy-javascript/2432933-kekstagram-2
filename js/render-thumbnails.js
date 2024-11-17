@@ -21,8 +21,8 @@ const createPictureElement = (pictureData) => {
 
 
 const renderingThumbnails = (arrays) => {
-  const PICTURE_ELEMENT = picturesElement.querySelectorAll('.picture');
-  PICTURE_ELEMENT.forEach((picture) => picture.remove());
+  const galleryListPicturesElement = picturesElement.querySelectorAll('.picture');
+  galleryListPicturesElement.forEach((picture) => picture.remove());
 
 
   const fragment = document.createDocumentFragment();

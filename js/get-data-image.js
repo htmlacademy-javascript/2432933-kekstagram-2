@@ -5,16 +5,15 @@ import { picturesElement, API } from './const.js';
 import { createFilters, filterClickHandler } from './filter-function.js';
 
 
-const imageFilterElement = document.querySelector('.img-filters');
-const imageFormElement = imageFilterElement.querySelector('.img-filters__form');
-
-
 const DELAY_DELETE_TEMPLATE = 5000;
 const RERENDER_DELAY = 500;
 
+const imageFilterElement = document.querySelector('.img-filters');
+const imageFormElement = imageFilterElement.querySelector('.img-filters__form');
+
 let globalData = [];
 
-const errorMessage = () => {
+const showErrorMessage = () => {
   const templateElement = createPatternTemplate('#data-error', '.data-error');
   document.body.appendChild(templateElement);
 
@@ -38,7 +37,7 @@ const getDataImage = async () => {
     const filters = createFilters(globalData);
     imageFormElement.addEventListener('click', debounce(filterClickHandler(filters), RERENDER_DELAY));
   } catch (error) {
-    errorMessage();
+    showErrorMessage ();
   }
 };
 

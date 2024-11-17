@@ -2,9 +2,9 @@ import { bigPicture, previewImageElement } from './const.js';
 import { toggleModal } from './utils.js';
 import { createComment } from './create-comment-element.js';
 
+const STEP_CLICK = 5;
 let globalCommentsArrays = [];
 let currentCommentsCount = 0;
-const STEP_CLICK = 5;
 
 const onLoadComments = () => {
   const commentsToShow = globalCommentsArrays.slice(0, currentCommentsCount + STEP_CLICK);

@@ -4,10 +4,11 @@ import { openModalForm, closeModalForm } from './modal-forms.js';
 import { displayMessage } from './displayMessage.js';
 
 
-const effectPreviewElement = uploadFormElement.querySelectorAll('.effects__preview');
-
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const effectsPreviewElement = uploadFormElement.querySelectorAll('.effects__preview');
+
 
 const configPristine = {
   classTo : 'img-upload__field-wrapper',
@@ -99,8 +100,8 @@ const onFormSubmit = (evt) => {
   sendFormData();
 };
 
-const backgrounPreviewdImage = (imageUrl) => {
-  effectPreviewElement.forEach((element) => {
+const setBackgroundPreviewImage = (imageUrl) => {
+  effectsPreviewElement.forEach((element) => {
     element.style.backgroundImage = `url(${imageUrl})`;
   });
 };
@@ -114,7 +115,7 @@ const onUploudFile = () => {
 
   if (matches) {
     uploud.imageElement.src = imageUrl;
-    backgrounPreviewdImage(imageUrl);
+    setBackgroundPreviewImage(imageUrl);
     openModalForm();
     uploadFormElement.addEventListener('submit', onFormSubmit);
   }
