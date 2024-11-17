@@ -1,7 +1,7 @@
 import { renderingThumbnails } from './render-thumbnails.js';
 
-const filtersButtonsElement = document.querySelectorAll('.img-filters__button');
 const COUNT = 10;
+const filtersButtonsElement = document.querySelectorAll('.img-filters__button');
 
 const createFilters = (data) => {
   const randomPicture = () => data.slice(0, COUNT).sort(() => 0.5 - Math.random());
