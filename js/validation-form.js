@@ -30,17 +30,17 @@ const checkingLength = (value) => value.length <= COMMENT_MAX_LENGTH;
 pristine.addValidator(uploud.textDescriptionElement, checkingLength, errorMessages.maxLengthComment);
 
 const validateHashtags = (value) => {
-  const hashtags = value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const hashtagsNew = new Set(hashtags).size !== hashtags.length;
-  const testRegex = hashtags.every((tag) => HASHTAG_REGEX.test(tag));
+  const hashtag = value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const hashTagNew = new Set(hashtag).size !== hashtag.length;
+  const testRegex = hashtag.every((tag) => HASHTAG_REGEX.test(tag));
 
   const validations = [
     {
-      check   : () => hashtags.length > 5,
+      check   : () => hashtag.length > 5,
       message :  errorMessages.maxHashTag
     },
     {
-      check   : () => hashtagsNew,
+      check   : () => hashTagNew,
       message :  errorMessages.replayHashTag
     },
     {

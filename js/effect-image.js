@@ -35,7 +35,7 @@ const updateConfig = ({min, max, step}) =>{
 const applyEffect = (name, level) => {
   const nameEffect = effects[name];
   uploud.imageElement.style.filter = nameEffect ? nameEffect.effect(level) : 'none';
-  sliderEffect.effectsLevelValueElement.setAttribute('value', level);
+  sliderEffect.levelValueElement.setAttribute('value', level);
 };
 
 const toggleEffectVisibility = (isHidden) => {
@@ -63,12 +63,12 @@ const onEffectChange = (evt) => {
 };
 
 const onChangeListener = () => {
-  sliderEffect.effectsListElement.addEventListener('change', onEffectChange);
+  sliderEffect.listElement.addEventListener('change', onEffectChange);
 };
 
 slider.on('update', (values) => {
   const level = parseFloat(values[0]);
-  const radioCheckedElement = sliderEffect.effectsListElement.querySelector('.effects__radio:checked').value;
+  const radioCheckedElement = sliderEffect.listElement.querySelector('.effects__radio:checked').value;
   applyEffect(radioCheckedElement, level);
 });
 

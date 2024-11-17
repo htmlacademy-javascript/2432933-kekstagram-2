@@ -41,8 +41,8 @@ const scaleControl = {
 
 const sliderEffect = {
   sliderElement               : uploadFormElement.querySelector('.effect-level__slider'),
-  effectsListElement          : uploadFormElement.querySelector('.effects__list'),
-  effectsLevelValueElement    : uploadFormElement.querySelector('.effect-level__value'),
+  listElement          : uploadFormElement.querySelector('.effects__list'),
+  levelValueElement    : uploadFormElement.querySelector('.effect-level__value'),
 };
 
 
