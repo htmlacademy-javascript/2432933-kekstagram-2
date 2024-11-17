@@ -1,5 +1,6 @@
 import { createPatternTemplate } from './utils.js';
 import { modalsForm } from './modal-forms.js';
+
 const deleteTemplate = (template, selectButton) => {
   const handlers = {
     delete() {
